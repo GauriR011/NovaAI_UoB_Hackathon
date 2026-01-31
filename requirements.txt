@@ -1,0 +1,44 @@
+# -- INSTRUCTIONS TO INSTALL THE DEPENDENCIES --
+
+# Run the following command to install:
+# pip install -r requirements.txt
+
+# If you’re using a virtual environment (recommended to avoid conflicts), you can do:
+# python -m venv myenv
+# source venv/bin/activate    # Linux/macOS
+# venv\Scripts\activate       # Windows
+# pip install -r requirements.txt
+
+
+
+# Core libraries
+numpy
+pydantic
+python-dotenv
+
+# PDF and file handling
+pypdf
+python-multipart
+
+# FastAPI for web framework
+fastapi
+uvicorn
+
+# LangChain and related modules
+langchain
+langchain-text-splitter
+langchain-core
+langchain-community
+langchain-google-genai
+
+# Vector store
+chromadb
+
+# Tavily SDK
+tavily-python
+
+
+
+
+
+
