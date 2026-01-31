@@ -1,0 +1,403 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hr-cv-intake",
+        "options": {}
+      },
+      "id": "30a1a873-75de-40b6-8859-5f206a0552fd",
+      "name": "Webhook Intake",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        -1296,
+        112
+      ],
+      "webhookId": "a9538c7e-c63e-47c7-8cb8-8ef92cf638a9"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d33d0a3d-2d2b-47c0-ad52-97ea63d1ccbf",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        304
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "zfwh942H0xtLpySR",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Role: Senior Technical Talent Lead at Space42.\n\nTask: > Conduct an uncompromising technical alignment audit. You are comparing a Live Candidate CV against a MongoDB Job Document. Space42 demands high-scale impact; prioritize candidates with strong mathematical foundations and scalable AI/SpaceTech experience.\n\nData Inputs:\n\n    Candidate CV: {{ $('Extract from File').first().json.text }}\n\n    Target Job (from MongoDB): {{ JSON.stringify($json) }} (Note: This assumes the MongoDB node is placed right before the AI).\n\nStep 1: Deep Semantic Match Extract the requirements, title, and description from the MongoDB Job Document.\n\n    Compare the candidate's actual projects against the specific Space42 requirements (e.g., Python, Linux, Geospatial libraries).\n\n    Proof of Impact: Look for MLOps, geospatial libraries (GDAL, PyProj), or satellite payload experience.\n\nStep 2: Scored Output (Strict Separation) You MUST return your analysis in two distinct sections:\n\nSECTION 1: ANALYSIS_DATA (JSON)\nJSON\n\n{\n  \"candidate_name\": \"Full Name from CV\",\n  \"match_score\": 0-100,\n  \"pros\": [\"List specific technical strengths\"],\n  \"cons\": [\"List specific technical gaps\"],\n  \"matched_role\": \"Title from MongoDB\"\n}\n\nNote: If they lack a \"Must-Have\" skill from the MongoDB requirements, the score cannot exceed 65.\n\nSECTION 2: REJECTION_LETTER If match_score < 70, provide a polite, Space42-branded rejection text. Cite the specific cons identified.\n\nStep 3: Space42 Interview Protocol If match_score >= 70:\n\n    Use the Google Calendar Tool for Wednesday, Feb 4, 2026.\n\n    Find a 30-minute block between 10:00 and 14:00 GST.\n\n    Suggest this time in a final \"RECOMMENDED_SCREENING\" section.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "a3b246bf-9ff9-4429-9fbe-25a239e01844",
+      "name": "AI HR Manager",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        -448,
+        112
+      ],
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1KrmqXfc54RT_lukfe9T1OYbiAFK_QAqld8lhesUk7uc",
+          "mode": "list",
+          "cachedResultName": "Candidates",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KrmqXfc54RT_lukfe9T1OYbiAFK_QAqld8lhesUk7uc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KrmqXfc54RT_lukfe9T1OYbiAFK_QAqld8lhesUk7uc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineAcrossColumns",
+          "value": {
+            "Name": "={{ $node[\"AI HR Manager\"].json.candidate_name }}",
+            "Score": "={{ $node[\"AI HR Manager\"].json.match_score }}",
+            "Pros": "={{ $node[\"AI HR Manager\"].json.pros }}",
+            "Cons": "={{ $node[\"AI HR Manager\"].json.cons }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "390d31d2-28b5-4b40-b690-91c7584007c9",
+      "name": "Sheets: Log Data",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.2,
+      "position": [
+        272,
+        0
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "E9locjUdq05FhTLq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "rpopovv987@gmail.com",
+          "mode": "list",
+          "cachedResultName": "rpopovv987@gmail.com"
+        },
+        "start": "={{ $node[\"AI HR Manager\"].json.meeting_start }}",
+        "end": "={{ $node[\"AI HR Manager\"].json.meeting_end }}",
+        "additionalFields": {
+          "summary": "=Interview: {{ $node[\"AI HR Manager\"].json.candidate_name }}"
+        }
+      },
+      "id": "d430be5a-7005-43be-bf75-64d51b17d657",
+      "name": "Calendar: Book Slot",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        0
+      ],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZDylUxvUqZRcsZ0R",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook Intake').first().json.body.candidate.email }}",
+        "subject": "Application Update",
+        "emailType": "text",
+        "message": "=={{ $json.rejection_letter }}",
+        "options": {}
+      },
+      "id": "ed65bfa1-3eb3-428f-ad77-1e29616e9d6d",
+      "name": "Gmail: Rejection",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        304,
+        304
+      ],
+      "webhookId": "ddc3437f-7d5b-4e0d-b445-ba0094eb9b21",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nElF8hBb6u8ZyZ1W",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "body.candidate.cv_file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -1120,
+        272
+      ],
+      "id": "a06d418e-95df-47ba-9e47-c2755cc52cd9",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -880,
+        272
+      ],
+      "id": "1797bba7-1320-4fca-a0ed-c637b77cc584",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -800,
+        80
+      ],
+      "id": "42251e9a-0a55-4025-86fe-69f7e7fc5413",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.match_score }}",
+              "operation": "largerEqual",
+              "value2": 70
+            }
+          ]
+        }
+      },
+      "id": "8999e55c-5804-45b1-b6c3-a12c136e6844",
+      "name": "Filter: Score Check",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// This script parses the AI output and separates the JSON data from the Rejection Text\nconst rawOutput = items[0].json.output; // Assuming 'output' is the key from your AI Agent\n\nlet analysisData = {};\nlet rejectionLetter = \"\";\n\ntry {\n  // 1. Extract the JSON block for Analysis\n  const jsonMatch = rawOutput.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) {\n    analysisData = JSON.parse(jsonMatch[0]);\n  }\n\n  // 2. Extract the Rejection Letter text\n  const rejectionMatch = rawOutput.split(\"REJECTION_LETTER\");\n  if (rejectionMatch.length > 1) {\n    rejectionLetter = rejectionMatch[1].trim();\n  } else {\n    rejectionLetter = \"No rejection letter generated.\";\n  }\n\n} catch (error) {\n  analysisData = { error: \"Failed to parse AI output\", raw: rawOutput };\n}\n\nreturn {\n  candidate_name: analysisData.candidate_name || \"Unknown\",\n  match_score: analysisData.match_score || 0,\n  pros: analysisData.pros ? analysisData.pros.join(', ') : \"\",\n  cons: analysisData.cons ? analysisData.cons.join(', ') : \"\",\n  rejection_letter: rejectionLetter,\n  is_shortlisted: (analysisData.match_score >= 70) ? true : false\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -192,
+        272
+      ],
+      "id": "f62d5a93-1187-42c3-8ced-66a185f92ed8",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1IA08lz-yF9EErKmSKjsbUPMi19wvCoxVz0a10Y2PtAo",
+          "mode": "list",
+          "cachedResultName": "Job Listing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IA08lz-yF9EErKmSKjsbUPMi19wvCoxVz0a10Y2PtAo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IA08lz-yF9EErKmSKjsbUPMi19wvCoxVz0a10Y2PtAo/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -336,
+        320
+      ],
+      "id": "a99e517c-5e84-4d13-805c-f44687546b12",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "E9locjUdq05FhTLq",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook Intake": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI HR Manager",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI HR Manager": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets: Log Data": {
+      "main": [
+        [
+          {
+            "node": "Calendar: Book Slot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "AI HR Manager",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail: Rejection": {
+      "main": [
+        []
+      ]
+    },
+    "Filter: Score Check": {
+      "main": [
+        [
+          {
+            "node": "Sheets: Log Data",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail: Rejection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Filter: Score Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI HR Manager",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "6547958d-2ea0-4749-a76a-d2b5d7ebe0be",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0989207f380f321171914edbe3e51916b6a2238f1dbe25f9cf428cbcf8c637d8"
+  },
+  "id": "FE1peM_uC4zyhW5F6UmN1",
+  "tags": []
+}
