@@ -414,3 +414,6 @@ if __name__ == "__main__":
 # HOW TO RUN THIS
 # python app.py
 # uvicorn app:app --reload
+
+
+# TODO: Change the prompt to the previous one
