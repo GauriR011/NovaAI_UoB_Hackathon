@@ -6,7 +6,7 @@ An AI-powered career platform for Space42, featuring Nova AI chat assistant and 
 
 ## ✨ Features
 
-- **Nova AI Chat** - Intelligent career assistant powered by GPT-4o-mini with RAG context
+- **Nova AI Chat** - Intelligent career assistant powered by Gemini-3-flash with RAG context
 - **PDF Resume Upload** - Extract text from PDF resumes using pdf.js
 - **AI Resume Matching** - Analyze resumes and match candidates to Space42 job openings
 - **Real-time Profile Display** - Show candidate skills, experience, and job compatibility scores
@@ -17,7 +17,7 @@ An AI-powered career platform for Space42, featuring Nova AI chat assistant and 
 - **Frontend**: React 19 + TypeScript + Vite
 - **Styling**: Tailwind CSS
 - **Backend**: Supabase Edge Functions (Deno)
-- **AI**: OpenRouter API (GPT-4o-mini)
+- **AI**: OpenRouter API (google/gemini-3-flash-preview)
 - **PDF Parsing**: pdfjs-dist
 
 ## 🚀 Quick Start
@@ -144,8 +144,9 @@ npm run type-check # TypeScript check
 ## 🤝 Team
 
 Built for UoB Hackathon 2026 by:
-- Frontend: Mia
+- Frontend: Claire & Claude & Gemini
 - Backend: Gauri
+- Agentic Workflow: Roman
 
 ## 📄 License
 
