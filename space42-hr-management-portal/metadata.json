@@ -1,0 +1,8 @@
+{
+  "name": "Space42 HR Management Portal",
+  "description": "A sophisticated AI-driven HR dashboard for candidate management, automated shortlisting, and intelligent interview coordination.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

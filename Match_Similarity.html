@@ -1,0 +1,261 @@
+<!DOCTYPE html><html><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta http-equiv="x-dns-prefetch-control" content="off"><script src="https://puc.poecdn.net/authenticated_preview_page/standard.3ef2c256959faf5a756d.js"></script>
+    <meta charset="utf-8">
+    <title>Poe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://puc.poecdn.net/authenticated_preview_page/disableWebRTC.9710cebe07429a9e8e06.js"></script><meta name="x-poe-allow-downloads" content="true"><meta name="x-poe-datastore-behavior" content="disabled"><script src="https://puc.poecdn.net/authenticated_preview_page/tw.b9024aecac666455e183.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/deps.faccd16000d314dc16d5.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/exports.b0f0f482cdeb5302b0b9.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/renderer.75c73ae6b4235f62945a.js"></script><script>Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+
+
+
+
+
+
+
+
+
+
+var _lucidereact = require('lucide-react');
+var _framermotion = require('framer-motion');
+
+// 模拟后端返回的职位数据结构
+const MOCK_JOBS_RESPONSE = [
+    {
+        id: 1,
+        title: "Tax Manager",
+        description: "Lead the charge in optimizing tax compliance and strategy for our innovative SpaceTech company. You will handle direct and indirect taxation, along with expertise in transfer pricing...",
+        location: "Abu Dhabi",
+        matchScore: 92 // 假设后端会返回匹配度
+    },
+    {
+        id: 2,
+        title: "Vice President - Satellite Operations",
+        description: "Oversee the financial efficiency and operational budget of our satellite constellations. Ensure maximum ROI on orbital assets through strategic resource allocation.",
+        location: "Abu Dhabi",
+        matchScore: 88
+    },
+    {
+        id: 3,
+        title: "Associate - Financial Accounting",
+        description: "Join our finance team to manage daily accounting operations, reconcile accounts, and assist in preparing monthly financial reports for our expanding space missions.",
+        location: "Dubai",
+        matchScore: 85
+    },
+    {
+        id: 4,
+        title: "Senior Engineer - Business & Gov Solutions",
+        description: "Develop technical solutions for government clients, bridging the gap between complex satellite capabilities and public sector requirements.",
+        location: "Riyadh",
+        matchScore: 79
+    }
+];
+
+ function JobMatchingInterface() {
+    const [isMatching, setIsMatching] = _react.useState.call(void 0, false);
+    const [jobs, setJobs] = _react.useState.call(void 0, MOCK_JOBS_RESPONSE);
+
+    // --- 后端集成点 ---
+    // 这个函数用于调用你的后端 Similarity Matching API
+    const runBackendMatch = async () => {
+        setIsMatching(true);
+
+        try {
+            // TODO: 在这里替换为真实的后端调用
+            // const response = await fetch('/api/match-jobs', {
+            //     method: 'POST',
+            //     body: JSON.stringify({ userId: 'alex-chen-123' })
+            // });
+            // const data = await response.json();
+            
+            // 模拟网络延迟 (2秒)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // 假设后端返回了新的排序或筛选结果
+            // setJobs(data.jobs); 
+            console.log("AI Matching completed. Data refreshed.");
+            
+        } catch (error) {
+            console.error("Matching failed:", error);
+        } finally {
+            setIsMatching(false);
+        }
+    };
+
+    return (
+        _react2.default.createElement('div', { className: "min-h-screen bg-gray-50 font-sans text-slate-800"   ,}
+            /* Header */
+            , _react2.default.createElement('header', { className: "flex justify-between items-center px-8 py-4 bg-white border-b border-gray-100 sticky top-0 z-10"          ,}
+                , _react2.default.createElement('div', { className: "flex items-center gap-3 font-bold text-lg"    ,}
+                    , _react2.default.createElement('div', { className: "w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white"       ,}
+                        , _react2.default.createElement(_lucidereact.Sparkles, { size: 18,} )
+                    ), "Space42 Careers"
+
+                )
+                , _react2.default.createElement('div', { className: "flex items-center gap-4"  ,}
+                    , _react2.default.createElement('button', { className: "p-2 rounded-full hover:bg-gray-100 text-gray-400 transition-colors"    ,}
+                        , _react2.default.createElement(_lucidereact.Moon, { size: 20,} )
+                    )
+                    , _react2.default.createElement('span', { className: "bg-gray-100 px-3 py-1.5 rounded-md text-xs font-bold text-gray-400 tracking-wide"       ,}, "GUEST MODE"
+
+                    )
+                    , _react2.default.createElement('button', { className: "p-2 rounded-full hover:bg-gray-100 text-gray-400 transition-colors"    ,}
+                        , _react2.default.createElement(_lucidereact.Bell, { size: 20,} )
+                    )
+                )
+            )
+
+            , _react2.default.createElement('main', { className: "max-w-7xl mx-auto px-6 py-8"   ,}
+                /* Stepper */
+                , _react2.default.createElement('div', { className: "flex justify-center items-center mb-12 max-w-3xl mx-auto"     ,}
+                    , _react2.default.createElement(StepItem, { number: 1, label: "DISCOVERY", status: "completed",} )
+                    , _react2.default.createElement(StepConnector, { active: true,} )
+                    , _react2.default.createElement(StepItem, { number: 2, label: "IDENTIFY", status: "completed",} )
+                    , _react2.default.createElement(StepConnector, { active: true,} )
+                    , _react2.default.createElement(StepItem, { number: 3, label: "APPLICATION", status: "active",} )
+                    , _react2.default.createElement(StepConnector, null )
+                    , _react2.default.createElement(StepItem, { number: 4, label: "MISSION LOG" , status: "pending",} )
+                )
+
+                /* Candidate Profile Card */
+                , _react2.default.createElement('div', { className: "bg-gradient-to-r from-indigo-50 via-white to-indigo-50 rounded-3xl p-8 shadow-sm border border-indigo-100 mb-12 relative overflow-hidden"           ,}
+                    , _react2.default.createElement('div', { className: "flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10"        ,}
+
+                        , _react2.default.createElement('div', { className: "flex items-center gap-6"  ,}
+                            , _react2.default.createElement('div', { className: "w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-indigo-200 shadow-lg"           ,}, "AC"
+
+                            )
+                            , _react2.default.createElement('div', null
+                                , _react2.default.createElement('div', { className: "flex items-center gap-3 mb-1"   ,}
+                                    , _react2.default.createElement('h1', { className: "text-2xl font-bold text-gray-900"  ,}, "Alex Chen" )
+                                    , _react2.default.createElement('span', { className: "bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded flex items-center gap-1"         ,}
+                                        , _react2.default.createElement(_lucidereact.Check, { size: 12,} ), " IDENTIFIED"
+                                    )
+                                )
+                                , _react2.default.createElement('p', { className: "text-gray-500 text-sm font-medium tracking-wide mb-3"    ,}, "4Y EXPERIENCE • MISSION PROFILE SYNCED"
+
+                                )
+                                , _react2.default.createElement('div', { className: "flex gap-2" ,}
+                                    , ['REACT', 'TYPESCRIPT', 'NODE.JS'].map(tag => (
+                                        _react2.default.createElement('span', { key: tag, className: "bg-indigo-100 text-indigo-700 px-3 py-1 rounded-md text-xs font-bold"      ,}
+                                            , tag
+                                        )
+                                    ))
+                                )
+                            )
+                        )
+
+                        , _react2.default.createElement('div', { className: "flex items-center gap-4 w-full md:w-auto"    ,}
+                            , _react2.default.createElement('button', { 
+                                onClick: runBackendMatch,
+                                disabled: isMatching,
+                                className: `
+                                    flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-white font-bold shadow-lg transition-all w-full md:w-auto
+                                    ${isMatching ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 hover:shadow-indigo-200 hover:-translate-y-0.5'}
+                                `,}
+
+                                , isMatching ? (
+                                    _react2.default.createElement(_react2.default.Fragment, null
+                                        , _react2.default.createElement(_lucidereact.Loader2, { className: "animate-spin", size: 20,} ), "ANALYZING RESUME..."
+
+                                    )
+                                ) : (
+                                    _react2.default.createElement(_react2.default.Fragment, null
+                                        , _react2.default.createElement(_lucidereact.Sparkles, { size: 20,} ), "RUN AI MATCH"
+
+                                    )
+                                )
+                            )
+                            , _react2.default.createElement('button', { className: "p-4 border border-gray-200 rounded-xl hover:bg-white hover:shadow-md transition-all text-gray-400"       ,}
+                                , _react2.default.createElement(_lucidereact.Upload, { size: 20,} )
+                            )
+                        )
+                    )
+                )
+
+                /* Available Missions Section */
+                , _react2.default.createElement('div', { className: "mb-8",}
+                    , _react2.default.createElement('h2', { className: "text-3xl font-bold text-gray-900 mb-2"   ,}, "Available Missions" )
+                    , _react2.default.createElement('p', { className: "text-gray-500",}, "Nova has identified these roles across our sectors based on your profile."           )
+                )
+
+                /* Job Grid */
+                , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-6"   ,}
+                    , jobs.map((job) => (
+                        _react2.default.createElement(JobCard, { key: job.id, job: job,} )
+                    ))
+                )
+            )
+        )
+    );
+} exports.default = JobMatchingInterface;
+
+// --- Sub Components ---
+
+function StepItem({ number, label, status }) {
+    const isCompleted = status === 'completed';
+    const isActive = status === 'active';
+    
+    return (
+        _react2.default.createElement('div', { className: "flex flex-col items-center gap-2 relative z-10"     ,}
+            , _react2.default.createElement('div', { className: `
+                w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-300
+                ${isCompleted ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : ''}
+                ${isActive ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-300 ring-4 ring-indigo-100 scale-110' : ''}
+                ${status === 'pending' ? 'bg-white border-2 border-gray-200 text-gray-300' : ''}
+            `,}
+                , isCompleted ? _react2.default.createElement(_lucidereact.Check, { size: 18,} ) : number
+            )
+            , _react2.default.createElement('span', { className: `
+                text-[10px] font-bold tracking-widest uppercase mt-1
+                ${isActive ? 'text-indigo-600' : 'text-gray-400'}
+            `,}
+                , label
+            )
+        )
+    );
+}
+
+function StepConnector({ active }) {
+    return (
+        _react2.default.createElement('div', { className: `flex-1 h-[2px] mx-4 mb-6 ${active ? 'bg-indigo-600' : 'bg-gray-200'}`,})
+    );
+}
+
+function JobCard({ job }) {
+    return (
+        _react2.default.createElement(_framermotion.motion.div, { 
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            className: "bg-white p-8 rounded-3xl border border-gray-100 hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-50 transition-all duration-300 group cursor-pointer flex flex-col h-full"              ,}
+
+            , _react2.default.createElement('div', { className: "flex justify-between items-start mb-4"   ,}
+                , _react2.default.createElement('h3', { className: "text-xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors"    ,}
+                    , job.title
+                )
+                /* Optional: Show match score if available */
+                , job.matchScore && (
+                    _react2.default.createElement('span', { className: "bg-green-50 text-green-700 text-xs font-bold px-2 py-1 rounded-full"      ,}
+                        , job.matchScore, "% Match"
+                    )
+                )
+            )
+
+            , _react2.default.createElement('p', { className: "text-gray-500 leading-relaxed mb-8 flex-grow"   ,}
+                , job.description
+            )
+
+            , _react2.default.createElement('div', { className: "flex items-center justify-between mt-auto pt-6 border-t border-gray-50"      ,}
+                , _react2.default.createElement('div', { className: "flex items-center gap-2 text-gray-400 text-sm font-medium"     ,}
+                    , _react2.default.createElement(_lucidereact.MapPin, { size: 16,} )
+                    , job.location
+                )
+                , _react2.default.createElement('button', { className: "flex items-center gap-2 text-indigo-600 font-bold text-sm group-hover:translate-x-1 transition-transform"       ,}, "View Mission "
+                      , _react2.default.createElement(_lucidereact.ArrowRight, { size: 16,} )
+                )
+            )
+        )
+    );
+}
+</script></head>
+  <body>
+  
+
+<div id="preview-app"></div></body></html>
