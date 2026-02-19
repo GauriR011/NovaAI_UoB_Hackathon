@@ -1,6 +1,126 @@
-# Space42 AI Career Platform 🚀
+# 🚀 Nova.AI  
+### AI-Powered Agentic Recruiting Assistant
 
-An AI-powered career platform for Space42, featuring Nova AI chat assistant and intelligent resume matching.
+Today, hiring is broken for both sides.
+
+HR teams are overwhelmed by hundreds of resumes, while candidates struggle with long, repetitive, and time-consuming application forms.
+
+The result?  
+⏳ Wasted time  
+🎯 Poor matches  
+😓 A frustrating experience for everyone  
+
+**Nova.AI** is built to fix that.
+
+
+
+## 🌟 Overview
+
+**Nova.AI** is an AI-powered agentic recruiting assistant designed to streamline hiring for both candidates and HR teams.  
+
+It automates resume matching, candidate support, and early-stage screening — reducing manual effort while improving hiring quality.
+
+
+
+# 🔑 Key Features
+
+## 1️⃣ Resume Matching & Smart Shortlisting
+
+Candidates can:
+- Upload their existing resume  
+**OR**
+- Generate one with AI assistance  
+
+Nova.AI automatically:
+- Compares the resume against available job roles
+- Calculates similarity scores
+- Ranks roles from highest to lowest match
+
+This allows candidates to:
+- Apply to roles that best align with their background
+- Improve their chances of shortlisting
+
+For HR teams:
+- A similarity threshold (e.g., **80% match**) can be set by admins
+- Candidates above the threshold are automatically shortlisted
+- Only qualified profiles move to the interview stage
+
+
+
+## 2️⃣ AI Recruiting Assistant (RAG-Based)
+
+Nova.AI serves as a conversational recruiting assistant.
+
+Candidates can ask questions about:
+- Company mission
+- Culture and values
+- Open roles
+- Hiring process
+
+The assistant uses **Retrieval-Augmented Generation (RAG)**, meaning:
+- It responds only using verified company content
+- It relies on approved internal documents
+- It prevents hallucinated or incorrect answers
+
+This ensures:
+- Accurate responses
+- Consistent information
+- Enterprise-ready scalability
+
+
+
+## 3️⃣ AI-Powered Early Stage Interview Screening
+
+Shortlisted candidates are invited to take an AI-led interview.
+
+Key Highlights:
+- Candidates can take interviews anytime within a defined deadline
+- Nova generates **role-specific questions**
+- Candidates respond naturally (no rigid forms)
+
+The AI evaluates:
+- Quality and relevance of responses
+- Communication clarity
+- Confidence and emotional signals
+- Sentiment and emotion patterns
+
+Each candidate receives a **screening score**, and only the strongest profiles move forward to HR review.
+
+
+
+# 🧠 How Nova.AI Improves Hiring
+
+### For Candidates
+- No more blind applications
+- Clear job-role alignment
+- Instant company information via chat
+- Flexible interview scheduling
+
+### For HR Teams
+- Automated resume screening
+- Reduced manual filtering
+- Intelligent shortlisting
+- Data-driven early-stage evaluation
+
+
+
+# 🛠 Tech Highlights
+
+- Large Language Models (LLMs)
+- RAG (Retrieval-Augmented Generation)
+- Semantic Similarity Matching
+- Sentiment & Emotion Analysis
+- Automated Scoring Pipelines
+- Configurable HR Thresholds
+
+---
+
+
+
+
+# Tech stack, Project Structure and Environment Setup
+
+We have created this platform tailored to Space42, a UAE-based, AI -powered SpaceTech company.
 
 ![Space42 Demo](https://img.shields.io/badge/Demo-Live-brightgreen) ![React](https://img.shields.io/badge/React-19-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)
 
